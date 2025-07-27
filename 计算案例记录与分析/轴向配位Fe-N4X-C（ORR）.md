@@ -118,3 +118,6 @@ NCORE = 16
 
 #LSOL = .TRUE.      
 ```
+
+## Pourbaix图计算验证稳定性
+[[Pourbaix图的计算]]
