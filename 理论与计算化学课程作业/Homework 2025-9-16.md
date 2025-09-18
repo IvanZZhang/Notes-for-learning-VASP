@@ -1,0 +1,7 @@
+## 第一题
+首先，根据辐射能量不连续，单个正值的能量表示为$$E_n=n\epsilon_0$$其中$n$为正整数，$\epsilon_0$为最小能量。由统计理论，该能量的振子出现几率为$$C\exp(-E_n/kT)=C\exp(-n\epsilon_0/kT)$$将平均能量看作$E_n$的数学期望，得到平均能量$$\bar{E}=\frac{\sum_{n=0}^{\infty}E_n\exp(-n\epsilon_0/kT)}{\sum_{n=0}^{\infty}\exp(-n\epsilon_0/kT)}=\frac{\epsilon_0\sum_{n=0}^{\infty}n\exp(-n\epsilon_0/kT)}{\sum_{n=0}^{\infty}\exp(-n\epsilon_0/kT)}$$其中$k$为常数，$T$为温度。设$x=\exp(-\epsilon_0/kT)$，上式写作$$\bar{E}=\frac{\epsilon_0\sum_{n=0}^{\infty}nx^n}{\sum_{n=0}^{\infty}x^n}$$由Taylor展开，$$\sum_{n=0}^{\infty}x^n=\frac{1}{1-x}\quad,|x|<1$$再令$y=\epsilon_0/kT$，构造$$\sum_{n=0}^{\infty}ne^{-ny}=\sum_{n=0}^{\infty}-\frac{\text{d}}{\text{d}y} e^{-ny}=-\frac{\text{d}}{\text{d}y}\frac{1}{1-e^{-y}}=\frac{e^{-y}}{(1-e^{-y})^2}$$因此平均能量表示为$$\bar{E}=\frac{\epsilon_0e^{-\epsilon_0/kT}(1-e^{-\epsilon_0/kT})}{(1-e^{-\epsilon_0/kT})^2}=\frac{\epsilon_0e^{-\epsilon_0/kT}}{1-e^{-\epsilon_0/kT}}=\frac{\epsilon_0}{e^{\epsilon_0/kT}-1}$$
+上述所表示的平均能量介于空腔单位体积内频率$\nu$~$\nu+\text{d}\nu$处。由于k空间中模式数$$N(k)=\frac{1}{8}\frac{4\pi k^3}{3}(\frac{l}{\pi})^3$$ $$N(\nu)=\frac{4\pi\nu^3l^3}{3c^3}$$故态密度$$g(\nu)=\frac{2}{l^3}\frac{\text{d}N}{\text{d}\nu}=\frac{8\pi\nu^2}{c^3}$$
+最后，由于$\epsilon_0=h\nu$，于是导出黑体辐射能量分布公式$$\rho(\nu,T)\text{d}{\nu}=\frac{8\pi h\nu^3}{c^3(e^{h\nu/kT}-1)}\text{d}{\nu}$$
+## 第二题
+波长4000A紫光的光子能量$$E=hc/\lambda=6.62\times10^{-34}\times3\times10^{8}/4000\times10^{-10}=4.965\times10^{-19}\text{J}$$$$=4.965\times10^{-12}\text{erg}=3.10\text{eV}$$所以K可以引起光电效应，而Ni不可以。
+## 第三题
