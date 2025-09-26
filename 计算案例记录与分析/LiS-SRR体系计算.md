@@ -1,0 +1,1 @@
+Wu-group集群提交命令 'qsub', 查看队列命令 'qstat'

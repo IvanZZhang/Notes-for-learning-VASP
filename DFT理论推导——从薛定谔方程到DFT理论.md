@@ -34,11 +34,12 @@ Hatree考虑单电子位于其他电子所建立的平均势场中运动，这�
 \vdots & \vdots & \ddots & \vdots \\
 \psi_1(x_N) & \psi_2(x_N) & \cdots & \psi_N(x_N) \\
 \end{matrix}
-\right)$$显而易见，这个波函数表达形式是反对称的。
+\right)$$显而易见，这个波函数表达形式是反对称的。$$\Psi(\dots,i,\dots,j,\dots)=-\Psi(\dots,j,\dots,i\dots)$$
 
 此时，体系总能量表示为$$E=\bra\Psi\hat H\ket\Psi=\sum_i\int\psi_{i,\sigma}^*(x_i)[-\frac1 2\nabla^2+V_\text{ext}]\psi_{i,\sigma}(x_i)\text{d}r+\frac1 2\sum_{i,j}\int\frac{\psi_i^*(x_i)\psi_j^*(x_j)\psi_j(x_j)\psi_i(x_i)}{|r_i-r_j|}\text{d}r_i\text{d}r_j+\frac1 2\sum_{i,j}\int\frac{\psi_i^*(x_i)\psi_j^*(x_j)\psi_j(x_i)\psi_i(x_j)}{|r_i-r_j|}\text{d}r_i\text{d}r_j$$
 该能量同时对应一个Schrodinger方程。1928年，Hatree提出了自洽势场的概念：由于已知单个粒子的波函数，可以得出体系波函数，计算出体系中各电子对应的平均势场，进而再次求得单个粒子波函数。如此构成一次迭代，直到单个粒子的波函数与各电子对应平均势场自洽。然而在实际计算过程中，这个迭代过程依赖于对初始状态的猜测，并且在一些情况下可能是不收敛的。
 ## 密度泛函理论
+基于Hatree-Fock方法的自洽计算时间复杂度是很高的，在大体系下需要的计算量指数级增长。因此，密度泛函理论（DFT）应运而生。DFT方法采用体系密度矩阵作为变量，可以在很大程度上减少计算的复杂度，使得大体系的计算具有可能性。
 ### Thomas-Fermi-Dirac模型
 
 ### Hohenberg-Kohn定理
