@@ -1,1 +1,1 @@
-Wu-group集群提交命令 'qsub', 查看队列命令 'qstat'
+Wu-group集群使用PBS作业管理，详见[[PBS作业管理]]
