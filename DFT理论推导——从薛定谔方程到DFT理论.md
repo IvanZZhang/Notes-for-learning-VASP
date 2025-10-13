@@ -43,7 +43,7 @@ Hatree考虑单电子位于其他电子所建立的平均势场中运动，这�
 ### Thomas-Fermi-Dirac模型
 
 ### Hohenberg-Kohn定理
-
+1964年，P. Hohenberg和W. Kohn提出了Hohenberg-Kohn定理，证明了电子密度可以唯一地决定体系能量。该定理成为了密度泛函理论的基础。
 ### Kohn-Sham方程
 
 ## 交换关联能泛函
