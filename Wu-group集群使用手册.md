@@ -1,3 +1,4 @@
+# PBS作业管理
 Wu-group集群使用PBS作业管理
 [查看原文](https://zhuanlan.zhihu.com/p/605138591)
 ## 操作命令
@@ -40,4 +41,22 @@ Wu-group集群使用PBS作业管理
 | 取消任务    | qdel 1234                 |
 | 交互式任务   | qsub -I，自动切换              |
 | 指定特定节点  | qsub -l nodes=comput1     |
+| 挂起任务    | qhold                     |
+| 取消挂起    | qrls                      |
+| 交换作业顺序  | qorder                    |
 
+# vasp编译的不同版本
+## 主版本vasp.5.4.4
+包含gam / ncl / std
+**gam**：仅gamma点，优化速度
+**ncl**：非线性，磁性体系会用到
+**std**：标准版本
+
+后缀名
+**fix-C / fix-AB**：指定消除某轴上应力。例如**fix-C**版本消除C轴应力，适用含真空层的二维体系计算。
+**sol**：溶剂化模型
+**wannier90**：磁性体系会用到
+
+## 其他版本
+**vasp.6.1.0**：更新MLP适配
+**vasp.6.4.0**：（在其他集群）声子谱消虚频
