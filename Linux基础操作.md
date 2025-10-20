@@ -115,3 +115,7 @@ find . -name 'CHG' -type f -print -delete
 ```
 sed -i "s/^.*NUPDOWN.*$/#NUPDOWN = 1/" INCAR  #查找文件中给定词语并整行替换
 ```
+### grep
+```
+grep "TOTEN" OUTCAR | tail -n 1  #抓取给定字符串的最后一行
+```
