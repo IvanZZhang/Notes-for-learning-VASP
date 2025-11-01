@@ -85,7 +85,7 @@ AMIX_MAG    = 0.80
 BMIX_MAG    = 0.0010
 
 Calculation mode:
-ICHARG = 1      #读取CHGCAR继续计算
+ICHARG = 11      #读取CHGCAR继续计算 # ICHARG = 11才能继承电荷密度和自旋
 
 PREC    = Accurate  
 ISPIN   = 2         
