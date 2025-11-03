@@ -94,6 +94,54 @@ NCORE = 8
 - 结构7、10正常收敛。
 添加溶剂化后结构12还是不收敛。尝试直接做scf。结构10验证可以直接溶剂化下SCF。
 
+**INCAR**
+```SCF
+Electronic relaxation:
+ENCUT   = 400.0      
+ALGO    = FAST          
+NELM    = 100            
+EDIFF   = 1E-4      
+AMIX    = 0.20      
+BMIX    = 0.0010    
+AMIX_MAG    = 0.80
+BMIX_MAG    = 0.0010
+
+Calculation mode:
+ISTART  = 0     #从头开始
+ICHARG  = 2     #取原子电荷密度的叠加
+PREC    = Accurate  
+ISPIN   = 2           
+ADDGRID = .TRUE.    
+LASPH   = .TRUE.    
+ISYM    = 0         
+
+LREAL = AUTO
+
+Integration over the Brillouin zone (BZ):
+ISMEAR  = 1         
+SIGMA   = 0.20        
+
+Ionic relaxation:
+NSW     = 0       #离子步0
+EDIFFG  = -0.05     
+IBRION  = -1      #无更新 
+POTIM   = 0.10        
+
+DOS calculation:
+LORBIT  = 11        
+
+for dipol correction:   
+LCHARG  = .TRUE.   #输出CHGCAR
+LWAVE   = .FALSE.  #不输出WAVECAR
+
+VDW: 
+IVDW = 12
+
+NCORE = 8
+
+LSOL = .TRUE.
+```
+
 **最终策略**：无溶剂化结构优化至收敛，再开溶剂化SCF。
 
 # 吸附
@@ -106,3 +154,14 @@ NCORE = 8
 | 序号  | 结构      |
 | --- | ------- |
 | 13  | Cu1@C2N |
+CONTCAR导入vesta，转为.cif格式，在ms中继续编辑
+
+| 序号  | Li2S3 | LiS | LiS2 | LiS3 | S   |
+| --- | ----- | --- | ---- | ---- | --- |
+| Cu1 | 14    |     |      |      |     |
+| Cu2 | 15    |     |      |      |     |
+| Cu3 | 16    |     |      |      |     |
+ - 结构16报错ERROR FEXCP: supplied Exchange-correletion table is too small, maximal index :        3946，增大`NELM`后继续。结果仍不能收敛
+ - 结构14同样报错。
+
+尝试分精度优化。先改`PREC = Normal`和`ALGO = VeryFast`尝试。
