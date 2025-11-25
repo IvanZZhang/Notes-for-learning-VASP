@@ -108,6 +108,7 @@ export MPIR_CVAR_COLL_ALIAS_CHECK=0
 ![[Pasted image 20251120224017.png]]
 ![[Pasted image 20251120230035.png]]
 ![[Pasted image 20251120230155.png]]
+[[Discuss 251121]]
 
 | 序号  | 结构                 | 收敛      |
 | --- | ------------------ | ------- |
@@ -117,6 +118,59 @@ export MPIR_CVAR_COLL_ALIAS_CHECK=0
 | 113 | Pt-In2O3(111)-3-负载 |         |
 | 114 | Pt-In2O3(111)-4-负载 |         |
 | 115 | In-bulk            |         |
+
+
+**INCAR** *update* 讨论后修正INCAR，修正后能很快收敛，应力残余消除。
+```Opt
+Electronic relaxation:
+ENCUT   = 450     
+ALGO    = F
+NELM    = 300             
+EDIFF   = 1E-5
+AMIX    = 0.20      
+BMIX    = 0.0010    
+#AMIX_MAG    = 0.80
+#BMIX_MAG    = 0.0010
+
+Calculation mode:
+PREC    = Normal
+ISPIN   = 1        
+#ADDGRID = .TRUE.    
+#LASPH   = .TRUE.    
+ISYM    = 0         
+#ICHARG = 1
+LREAL = AUTO
+
+Integration over the Brillouin zone (BZ):
+ISMEAR  = 0        
+SIGMA   = 0.05       
+
+Ionic relaxation:
+NSW     = 100  
+EDIFFG  = -0.05     
+IBRION  = 2              
+POTIM   = 0.5        
+
+DOS calculation:
+LORBIT  = 11        
+
+for dipol correction:
+#LDIPOL = .TRUE.
+#IDIPOL = 3    
+LWAVE = .TRUE.
+
+ISIF = 8 # or 3?
+#MAXMIX = 50
+
+VDW: 
+IVDW = 12
+
+Solution:
+#LSOL = .TRUE.
+
+NCORE = 4
+
+```
 # WO2.72
 ## 建模
 MP里没搜到WO2.72，用了师姐发的数据
@@ -133,8 +187,8 @@ MP里没搜到WO2.72，用了师姐发的数据
 | 125 | WO-020          | n   |
 | 126 | WO              |     |
 | 127 | W-bulk          |     |
-| 128 | Pt-WO-1         |     |
-| 129 | Pt-WO-2         |     |
+| 128 | Pt-WO-1         | y   |
+| 129 | Pt-WO-2         | y   |
 |     |                 |     |
 PAW应选用W_pv，但是没找到，默认的是W_sv。
 
@@ -150,3 +204,120 @@ PAW应选用W_pv，但是没找到，默认的是W_sv。
 
 *update:* 经讨论，不需要做团簇体系了，统一做晶面。需要注意的是，不同体系的晶面之间，负载单原子的化学环境基本相同，即配位数尽量相同。以此原则筛选位点。另外还需要计算表面的功函数。
 
+先计算WO的DOS验证结果。
+### SCF
+**KPOINTS**
+M-P 3 3 1
+
+**INCAR**
+```SCF-INCAR
+Electronic relaxation:
+ENCUT   = 450.0      
+ALGO    = F       
+NELM    = 60            
+EDIFF   = 1E-5
+AMIX    = 0.20      
+BMIX    = 0.0010  
+#AMIX_MAG    = 0.80
+#BMIX_MAG    = 0.0010
+
+Calculation mode:
+PREC    = N
+ISPIN   = 1        
+#ADDGRID = .TRUE.    
+#LASPH   = .TRUE.    
+ISYM    = 0         
+#ICHARG = 1
+ISTART = 0
+LREAL = AUTO
+
+Integration over the Brillouin zone (BZ):
+ISMEAR  = 0         
+SIGMA   = 0.05        
+
+Ionic relaxation:
+NSW     = 0  
+EDIFFG  = -0.05     
+IBRION  = -1              
+POTIM   = 0.50        
+
+DOS calculation:
+LORBIT  = 11        
+
+for dipol correction:
+#LDIPOL = .TRUE.
+#IDIPOL = 3    
+LWAVE = .FALSE.
+LCHARG = .TRUE.
+
+#ISIF = 3
+#MAXMIX = 50
+
+VDW: 
+IVDW = 12
+
+Solution:
+#LSOL = .TRUE.
+
+NCORE = 4
+```
+
+### DOS
+**KPOINTS**
+M-P 9 9 1
+
+**INCAR**
+```DOS-INCAR
+Electronic relaxation:
+ENCUT   = 450.0      
+ALGO    = F       
+NELM    = 60            
+EDIFF   = 1E-5
+AMIX    = 0.20      
+BMIX    = 0.0010  
+#AMIX_MAG    = 0.80
+#BMIX_MAG    = 0.0010
+
+Calculation mode:
+PREC    = N
+ISPIN   = 1        
+#ADDGRID = .TRUE.    
+#LASPH   = .TRUE.    
+ISYM    = 0         
+ICHARG = 11
+ISTART = 1
+LREAL = AUTO
+
+Integration over the Brillouin zone (BZ):
+ISMEAR  = 0         
+SIGMA   = 0.05        
+
+Ionic relaxation:
+NSW     = 0  
+EDIFFG  = -0.05     
+IBRION  = -1              
+POTIM   = 0.50        
+
+DOS calculation:
+EMIN = -10
+EMAX = 10
+NEDOS = 1001
+LORBIT  = 11        
+
+for dipol correction:
+#LDIPOL = .TRUE.
+#IDIPOL = 3    
+LWAVE = .FALSE.
+LCHARG = .TRUE.
+
+#ISIF = 3
+#MAXMIX = 50
+
+VDW: 
+IVDW = 12
+
+Solution:
+#LSOL = .TRUE.
+
+NCORE = 4
+```
