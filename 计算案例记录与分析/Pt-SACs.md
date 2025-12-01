@@ -98,9 +98,10 @@ export MPIR_CVAR_COLL_ALIAS_CHECK=0
 | 110 | In2O3-bulk         | y       |
 | 111 | Pt-In2O3(111)-1-吸收 | 表面O原子散开 |
 | 112 | Pt-In2O3(111)-2-吸收 | 表面O原子散开 |
-| 113 | Pt-In2O3(111)-3-负载 |         |
-| 114 | Pt-In2O3(111)-4-负载 |         |
+| 113 | Pt-In2O3(111)-3-负载 | update  |
+| 114 | Pt-In2O3(111)-4-负载 | update  |
 | 115 | In-bulk            |         |
+| 116 | In2O3-slab         |         |
 **再重做**：111到底是哪个面？
 ![[Pasted image 20251120215951.png]]
 ![[Pasted image 20251120220058.png]]
@@ -118,6 +119,7 @@ export MPIR_CVAR_COLL_ALIAS_CHECK=0
 | 113 | Pt-In2O3(111)-3-负载 |         |
 | 114 | Pt-In2O3(111)-4-负载 |         |
 | 115 | In-bulk            |         |
+| 116 | In2O3-slab         |         |
 
 
 **INCAR** *update* 讨论后修正INCAR，修正后能很快收敛，应力残余消除。
@@ -173,7 +175,7 @@ NCORE = 4
 ```
 # WO2.72
 ## 建模
-MP里没搜到WO2.72，用了师姐发的数据
+MP里没搜到WO2.72，用了师姐发的数据。实际上是有的，搜W18O49可得。
 
 表征晶面(200)
 
@@ -189,7 +191,7 @@ MP里没搜到WO2.72，用了师姐发的数据
 | 127 | W-bulk          |     |
 | 128 | Pt-WO-1         | y   |
 | 129 | Pt-WO-2         | y   |
-|     |                 |     |
+| 130 | WO-slab         |     |
 PAW应选用W_pv，但是没找到，默认的是W_sv。
 
 收敛正常，精度太高导致离子步100步后没有收敛，降低精度继续计算。
@@ -264,7 +266,7 @@ NCORE = 4
 
 ### DOS
 **KPOINTS**
-M-P 9 9 1
+M-P 6 6 1
 
 **INCAR**
 ```DOS-INCAR
@@ -289,7 +291,7 @@ ISTART = 1
 LREAL = AUTO
 
 Integration over the Brillouin zone (BZ):
-ISMEAR  = 0         
+ISMEAR  = -5     # more accurate
 SIGMA   = 0.05        
 
 Ionic relaxation:
@@ -299,16 +301,17 @@ IBRION  = -1
 POTIM   = 0.50        
 
 DOS calculation:
-EMIN = -10
-EMAX = 10
+#EMIN = -10
+#EMAX = 10
 NEDOS = 1001
 LORBIT  = 11        
 
 for dipol correction:
 #LDIPOL = .TRUE.
 #IDIPOL = 3    
+LVHAR = .TRUE.
 LWAVE = .FALSE.
-LCHARG = .TRUE.
+LCHARG = .FALSE.
 
 #ISIF = 3
 #MAXMIX = 50
@@ -321,3 +324,30 @@ Solution:
 
 NCORE = 4
 ```
+重启DOS计算前需要重新复制一份CHGCAR
+
+采点数`NEDOS = 1001`
+## 分子
+| 序号  | 结构    | 收敛  |
+| --- | ----- | --- |
+| 001 | H2    |     |
+| 002 | PhNO2 |     |
+| 003 | PhNH2 |     |
+分子也需要计算能级
+
+## CeO2
+| 序号  | 结构            | 收敛  |
+| --- | ------------- | --- |
+| 140 | CeO2-bulk     |     |
+| 141 | Pt-CeO2-1     |     |
+| 142 | Pt-CeO2-2     |     |
+| 143 | CeO2-111-slab |     |
+
+# 数据
+负载Pt原子的PDOS
+
+### 功函数
+需要计算功函数，来获取能级的绝对值用来比较。功函数需要在电子自洽时添加`LVHAR = .TRUE.`，通过`vaspkit 426`命令获得静电势，DOS作图是在费米能级校正的情况下再减去静电势。
+
+### 吸附能
+计算WO、In2O3、CeO2三个体系的吸附能，需要做频率校正
